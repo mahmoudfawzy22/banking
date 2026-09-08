@@ -5,17 +5,26 @@ import React from "react";
 import BankCard from "./BankCard";
 
 const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
+  const firstLetter = user?.name
+    ?.replace(/[\u200E\u200F\u202A-\u202E\u2066-\u2069]/g, "")
+    .trim()
+    .charAt(0);
+
   return (
     <aside className="right-sidebar">
       <section className="flex flex-col pb-8">
         <div className="profile-banner" />
         <div className="profile">
           <div className="profile-img">
-            <span className="text-5xl font-bold text-blue-500">M</span>
+            <span className="text-5xl font-bold text-blue-500">
+              <span className="text-5xl font-bold text-blue-500">
+                {firstLetter}
+              </span>
+            </span>
           </div>
 
           <div className="profile-details">
-            <h1 className="profile-name">Mahmoud fawzy</h1>
+            <h1 className="profile-name">{}</h1>
             <p className="profile-email">mahmoudfawzy@gmail.com</p>
           </div>
         </div>
@@ -36,7 +45,7 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
               <BankCard
                 key={banks[0].$id}
                 account={banks[0]}
-                userName={`${user.firstName} ${user.lastName}`}
+                userName={user}
                 showBalance={false}
               />
             </div>
@@ -45,7 +54,7 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
                 <BankCard
                   key={banks[1].$id}
                   account={banks[1]}
-                  userName={`${user.firstName} ${user.lastName}`}
+                  userName={user}
                   showBalance={false}
                 />
               </div>
