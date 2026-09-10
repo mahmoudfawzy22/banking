@@ -218,7 +218,7 @@ export const formSchema = (type: string) =>
     dateOfBirth: type === "sign-in" ? z.string().optional() : z.string().min(3),
 
     ssn: type === "sign-in" ? z.string().optional() : z.string().min(3),
-
+    city: type === "sign-in" ? z.string().optional() : z.string().min(3),
     // Both Sign In & Sign Up
     email: z.string().email("Please enter a valid email"),
 

@@ -2,7 +2,7 @@ import React from "react";
 import HeaderBox from "@/components/HeaderBox";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import RightSidebar from "@/components/RightSideBar";
-import { getLoggedInUser } from "@/lib/actions/user.action";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 const Home = async () => {
   const loggedIn = await getLoggedInUser();
   return (
@@ -23,7 +23,7 @@ const Home = async () => {
         </header>
       </div>
       <RightSidebar
-        user={loggedIn?.name}
+        user={loggedIn}
         transactions={[]}
         banks={[{ currentBalance: 123.5 }, { currentBalance: 123.5 }]}
       />
