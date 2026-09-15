@@ -107,8 +107,11 @@ export const addFundingSource = async ({
       plaidToken: processorToken,
       _links: dwollaAuthLinks,
     };
+
     return await createFundingSource(fundingSourceOptions);
   } catch (err) {
-    console.error("Transfer fund failed: ", err);
+    console.error("========== DWOLLA FUNDING SOURCE ERROR ==========");
+    console.error(err);
+    throw err;
   }
 };

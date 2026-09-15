@@ -9,7 +9,7 @@ const RootLayout = async ({
   children: React.ReactNode;
 }>) => {
   const loggedIn = await getLoggedInUser();
-  console.log(loggedIn);
+
   return (
     <main className="flex h-screen w-full font-inter">
       <SideBar user={loggedIn} />

@@ -8,15 +8,17 @@ import { count } from "console";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function DoughnutChart({ accounts }: DoughnutChartProps) {
+  const accountsNames = accounts.map((a) => a.name);
+  const accountBalance = accounts.map((a) => a.currentBalance);
   const data = {
     datasets: [
       {
         label: "Banks",
-        data: [1250, 3432, 2233],
+        data: accountBalance,
         backgroundColor: ["#0747b6", "#2265d8", "#2f91fa"],
       },
     ],
-    labels: ["Bank 1", "Bank 2", "Bank 3"],
+    labels: accountsNames,
   };
 
   return (
