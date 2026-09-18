@@ -100,6 +100,12 @@ const PaymentTransferForm = ({ accounts }: PaymentTransferFormProps) => {
         const senderId = extractUserId(senderBank.userId);
         const receiverId = extractUserId(receiverBank.userId);
 
+        if (!senderId || !receiverId) {
+          console.error("Sender or receiver user ID is missing");
+          setIsLoading(false);
+          return;
+        }
+
         const transaction = {
           name: data.name,
           amount: data.amount,
