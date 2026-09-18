@@ -1,25 +1,32 @@
 import React from "react";
+import { redirect } from "next/navigation";
+
 import HeaderBox from "@/components/HeaderBox";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import RightSidebar from "@/components/RightSideBar";
+
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
+
 import RecentTransactions from "@/components/RecentTransactions";
+
 const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
   const loggedIn = await getLoggedInUser();
-  const currentPage = Number(page as string) || 1;
+
   if (!loggedIn) {
-    // not authenticated — handle redirect or empty state as your app does elsewhere
-    return null;
+    redirect("/sign-in");
   }
 
-  const accounts = await getAccounts({ userId: loggedIn.$id });
+  const currentPage = Number(page as string) || 1;
+
+  const accounts = await getAccounts({
+    userId: loggedIn.$id,
+  });
 
   if (!accounts) return null;
 
   const accountsData = accounts?.data ?? [];
 
-  // Only fetch a specific account if the user actually has at least one linked bank
   const appwriteItemId = accountsData[0]?.appwriteItemId;
 
   const account = appwriteItemId ? await getAccount({ appwriteItemId }) : null;
@@ -34,12 +41,14 @@ const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
             user={loggedIn?.firstName || "Guest"}
             subtext="Access and manage your account and transactions efficiently"
           />
+
           <TotalBalanceBox
             accounts={accountsData}
             totalBanks={accounts?.totalBanks}
             totalCurrentBalance={accounts?.totalCurrentBalance}
           />
         </header>
+
         <RecentTransactions
           accounts={accountsData}
           transactions={account?.transactions}
@@ -47,6 +56,7 @@ const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
           page={currentPage}
         />
       </div>
+
       <RightSidebar
         user={loggedIn}
         transactions={account?.transactions}
